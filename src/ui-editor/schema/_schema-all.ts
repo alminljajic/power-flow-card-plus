@@ -1,5 +1,5 @@
 import { mdiBatteryHigh, mdiHome, mdiLeaf, mdiTransmissionTower, mdiWeatherSunny } from "@mdi/js";
-import { any, assign, boolean, integer, number, object, optional, string } from "superstruct";
+import { any, assign, boolean, integer, number, object, optional, string, refine } from "superstruct";
 import memoizeOne from "memoize-one";
 import { batterySchema } from "./battery";
 import { displayZeroLinesSchema } from "./display_zero_lines";
@@ -45,6 +45,9 @@ export const cardConfigStruct = assign(
     style_ha_card: optional(any()),
     style_card_content: optional(any()),
     disable_dots: optional(boolean()),
+    use_polygon: optional(string()
+  ),
+    //use_polygon: optional(string()),
     entities: object({
       battery: optional(any()),
       grid: optional(any()),
@@ -197,6 +200,11 @@ export const advancedOptionsSchema = memoizeOne((localize, displayZeroLinesMode:
         name: "disable_dots",
         label: "Disable Moving Dots",
         selector: { boolean: {} },
+      },
+      {
+        name: "use_polygon",
+        label: "Use Polygon for Dots",
+        selector: { text: {} },
       },
       {
         name: "use_new_flow_rate_model",

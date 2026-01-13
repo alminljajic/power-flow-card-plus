@@ -58,23 +58,40 @@ export const individualLeftTopElement = (
                               const n = checkFlowDotsCount(config) ?? 1;
                               const start = i / n;
                               const end = (i + 1) / n;  
-                              return svg`
-              
-              <circle
-          r="1.75"
-          class="individual-top"
-          vector-effect="non-scaling-stroke"
-        >
-          <animateMotion
-            dur="${computeIndividualFlowRate(individualObj?.field?.calculate_flow_rate, duration) / n}s"
-            repeatCount="indefinite"
-            calcMode="linear"
-            keyPoints=${individualObj.invertAnimation ? `${start} ; ${end}; ${start}` : `${end} ; ${start}; ${end}`}
-            keyTimes="0;1;1"
-          >
-            <mpath xlink:href="#individual-top" />
-          </animateMotion>
-        </circle>`
+                              return config.use_polygon
+                                ? svg`<polygon
+                                    points="${config.use_polygon}"
+                                    class="individual-top"
+                                    vector-effect="non-scaling-stroke"
+                                    transform="scale(1.75) ${individualObj.invertAnimation ? "":"rotate(180 0 0)"}"
+                                  >
+                                    <animateMotion
+                                      dur="${computeIndividualFlowRate(individualObj?.field?.calculate_flow_rate, duration) / n}s"
+                                      repeatCount="indefinite"
+                                      calcMode="linear"
+                                      rotate="auto"
+                                      keyPoints=${individualObj.invertAnimation ? `${start} ; ${end}; ${start}` : `${end} ; ${start}; ${end}`}
+                                      keyTimes="0;1;1"
+                                    >
+                                      <mpath xlink:href="#individual-top" />
+                                    </animateMotion>
+                                  </polygon>`
+                                : svg`<circle
+                                    r="1.75"
+                                    class="individual-top"
+                                    vector-effect="non-scaling-stroke"
+                                  >
+                                    <animateMotion
+                                      dur="${computeIndividualFlowRate(individualObj?.field?.calculate_flow_rate, duration) / n}s"
+                                      repeatCount="indefinite"
+                                      calcMode="linear"
+                                      rotate="auto"
+                                      keyPoints=${individualObj.invertAnimation ? `${start} ; ${end}; ${start}` : `${end} ; ${start}; ${end}`}
+                                      keyTimes="0;1;1"
+                                    >
+                                      <mpath xlink:href="#individual-top" />
+                                    </animateMotion>
+                                  </circle>`
         })}`
               : ""}
           </svg>

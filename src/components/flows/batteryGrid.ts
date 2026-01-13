@@ -32,23 +32,40 @@ export const flowBatteryGrid = (config: PowerFlowCardPlusConfig, { battery, grid
                               const n = checkFlowDotsCount(config) ?? 1;
                               const start = i / n;
                               const end = (i + 1) / n;
-                            return svg`
-          
-            <circle
-          r="1"
-          class="battery-from-grid"
-          vector-effect="non-scaling-stroke"
-        >
-          <animateMotion
-            dur="${newDur.batteryGrid / n}s"
-            keyTimes="0;1;1"
-            keyPoints="${(i + 1) / n} ; ${i / n} ; ${(i + 1) / n}"
-            repeatCount="indefinite"
-            calcMode="linear"
-          >
-            <mpath xlink:href="#battery-grid" />
-          </animateMotion>
-        </circle>`})}`
+                            return config.use_polygon
+                              ? svg`<polygon
+                                  points="${config.use_polygon}"
+                                  class="battery-from-grid"
+                                  vector-effect="non-scaling-stroke"
+                                  transform="rotate(180 0 0)"
+                                >
+                                  <animateMotion
+                                    dur="${newDur.batteryGrid / n}s"
+                                    keyTimes="0;1;1"
+                                    keyPoints="${(i + 1) / n} ; ${i / n} ; ${(i + 1) / n}"
+                                    repeatCount="indefinite"
+                                    calcMode="linear"
+                                    rotate="auto"
+                                  >
+                                    <mpath xlink:href="#battery-grid" />
+                                  </animateMotion>
+                                </polygon>`
+                              : svg`<circle
+                                  r="1"
+                                  class="battery-from-grid"
+                                  vector-effect="non-scaling-stroke"
+                                >
+                                  <animateMotion
+                                    dur="${newDur.batteryGrid / n}s"
+                                    keyTimes="0;1;1"
+                                    keyPoints="${(i + 1) / n} ; ${i / n} ; ${(i + 1) / n}"
+                                    repeatCount="indefinite"
+                                    calcMode="linear"
+                                    rotate="auto"
+                                  >
+                                    <mpath xlink:href="#battery-grid" />
+                                  </animateMotion>
+                                </circle>`})}`
             : ""}
           ${checkShouldShowDots(config) && battery.state.toGrid
             ? svg`
@@ -56,23 +73,39 @@ export const flowBatteryGrid = (config: PowerFlowCardPlusConfig, { battery, grid
                             const n = checkFlowDotsCount(config) ?? 1;
                             const start = i / n;
                             const end = (i + 1) / n;
-                            return svg`
-            
-            <circle
-              r="1"
-              class="battery-to-grid"
-              vector-effect="non-scaling-stroke"
-            >
-              <animateMotion
-                dur="${newDur.batteryGrid / n}s"
-                keyTimes="0;1;1"
-                keyPoints="${(i) / n} ; ${(i+1) / n}; ${(i) / n}"
-                repeatCount="indefinite"
-                calcMode="linear"
-              >
-                <mpath xlink:href="#battery-grid" />
-              </animateMotion>
-            </circle>`
+                            return config.use_polygon
+                              ? svg`<polygon
+                                  points="${config.use_polygon}"
+                                  class="battery-to-grid"
+                                  vector-effect="non-scaling-stroke"
+                                >
+                                  <animateMotion
+                                    dur="${newDur.batteryGrid / n}s"
+                                    keyTimes="0;1;1"
+                                    keyPoints="${(i) / n} ; ${(i+1) / n}; ${(i) / n}"
+                                    repeatCount="indefinite"
+                                    calcMode="linear"
+                                    rotate="auto"
+                                  >
+                                    <mpath xlink:href="#battery-grid" />
+                                  </animateMotion>
+                                </polygon>`
+                              : svg`<circle
+                                  r="1"
+                                  class="battery-to-grid"
+                                  vector-effect="non-scaling-stroke"
+                                >
+                                  <animateMotion
+                                    dur="${newDur.batteryGrid / n}s"
+                                    keyTimes="0;1;1"
+                                    keyPoints="${(i) / n} ; ${(i+1) / n}; ${(i) / n}"
+                                    repeatCount="indefinite"
+                                    calcMode="linear"
+                                    rotate="auto"
+                                  >
+                                    <mpath xlink:href="#battery-grid" />
+                                  </animateMotion>
+                                </circle>`
             })}`
             : ""}
         </svg>

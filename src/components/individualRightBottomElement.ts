@@ -73,22 +73,39 @@ export const individualRightBottomElement = (
                 const n = checkFlowDotsCount(config) ?? 1;
                 const start = i / n;
                 const end = (i + 1) / n;  
-                return svg`
-                <circle
-                    r="1"
-                    class="individual-bottom"
-                    vector-effect="non-scaling-stroke"
+                return config.use_polygon
+                  ? svg`<polygon
+                      points="${config.use_polygon}"
+                      class="individual-bottom"
+                      vector-effect="non-scaling-stroke"
+                      transform="scale(1.75) rotate(180 0 0)"
                     >
-
-                    <animateMotion
-                    dur="${computeIndividualFlowRate(individualObj?.field?.calculate_flow_rate, duration) / n}s"
-                    repeatCount="indefinite"
-                    calcMode="linear"
-                    keyPoints=${individualObj.invertAnimation ? `${start} ; ${end}; ${start}` : `${end} ; ${start}; ${end}`}
-                    keyTimes="0;1;1"
+                      <animateMotion
+                        dur="${computeIndividualFlowRate(individualObj?.field?.calculate_flow_rate, duration) / n}s"
+                        repeatCount="indefinite"
+                        calcMode="linear"
+                        rotate="auto"
+                        keyPoints=${individualObj.invertAnimation ? `${start} ; ${end}; ${start}` : `${end} ; ${start}; ${end}`}
+                        keyTimes="0;1;1"
+                      >
+                        <mpath xlink:href="#individual-bottom-right-home" />
+                      </animateMotion>
+                    </polygon>`
+                  : svg`<circle
+                      r="1"
+                      class="individual-bottom"
+                      vector-effect="non-scaling-stroke"
                     >
-                    <mpath xlink:href="#individual-bottom-right-home" />
-                    </animateMotion>
+                      <animateMotion
+                        dur="${computeIndividualFlowRate(individualObj?.field?.calculate_flow_rate, duration) / n}s"
+                        repeatCount="indefinite"
+                        calcMode="linear"
+                        rotate="auto"
+                        keyPoints=${individualObj.invertAnimation ? `${start} ; ${end}; ${start}` : `${end} ; ${start}; ${end}`}
+                        keyTimes="0;1;1"
+                      >
+                        <mpath xlink:href="#individual-bottom-right-home" />
+                      </animateMotion>
                     </circle>`
                     })}`
                 : ""}

@@ -33,22 +33,39 @@ export const flowSolarToBattery = (config: PowerFlowCardPlusConfig, { battery, i
                             const n = checkFlowDotsCount(config) ?? 1;
                             const start = i / n;
                             const end = (i + 1) / n;
-                            return svg`
-            <circle
-                r="1"
-                class="battery-solar"
-                vector-effect="non-scaling-stroke"
-              >
-                <animateMotion
-                  dur="${newDur.solarToBattery / n}s"
-                  keyTimes="0;1;1"
-                  keyPoints="${(i) / n} ; ${(i+1) / n}; ${(i) / n}"
-                  repeatCount="indefinite"
-                  calcMode="linear"
-                >
-                  <mpath xlink:href="#battery-solar" />
-                </animateMotion>
-              </circle>`
+                            return config.use_polygon
+                              ? svg`<polygon
+                                  points="${config.use_polygon}"
+                                  class="battery-solar"
+                                  vector-effect="non-scaling-stroke"
+                                >
+                                  <animateMotion
+                                    dur="${newDur.solarToBattery / n}s"
+                                    keyTimes="0;1;1"
+                                    keyPoints="${(i) / n} ; ${(i+1) / n}; ${(i) / n}"
+                                    repeatCount="indefinite"
+                                    calcMode="linear"
+                                    rotate="auto"
+                                  >
+                                    <mpath xlink:href="#battery-solar" />
+                                  </animateMotion>
+                                </polygon>`
+                              : svg`<circle
+                                  r="1"
+                                  class="battery-solar"
+                                  vector-effect="non-scaling-stroke"
+                                >
+                                  <animateMotion
+                                    dur="${newDur.solarToBattery / n}s"
+                                    keyTimes="0;1;1"
+                                    keyPoints="${(i) / n} ; ${(i+1) / n}; ${(i) / n}"
+                                    repeatCount="indefinite"
+                                    calcMode="linear"
+                                    rotate="auto"
+                                  >
+                                    <mpath xlink:href="#battery-solar" />
+                                  </animateMotion>
+                                </circle>`
               })}`
             : ""}
         </svg>

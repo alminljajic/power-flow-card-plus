@@ -267,12 +267,14 @@ export const styles = css`
   #solar-icon {
     color: var(--icon-solar-color);
   }
-  circle.individual-top {
+  circle.individual-top,
+  polygon.individual-top {
     stroke-width: 4;
     width: var(--dot-size);
     fill: var(--individual-left-top-color);
   }
-  circle.individual-bottom {
+  circle.individual-bottom,
+  polygon.individual-bottom {
     stroke-width: 4;
     width: var(--dot-size);
     fill: var(--individual-left-bottom-color);
@@ -292,7 +294,8 @@ export const styles = css`
     border-color: var(--individual-right-top-color);
   }
 
-  circle.individual-right-top .circle {
+  circle.individual-right-top .circle,
+  polygon.individual-right-top {
     fill: var(--individual-right-top-color);
   }
 
@@ -304,7 +307,8 @@ export const styles = css`
     border-color: var(--individual-right-bottom-color);
   }
 
-  circle.individual-right-bottom .circle {
+  circle.individual-right-bottom .circle,
+  polygon.individual-right-bottom {
     fill: var(--individual-right-bottom-color);
   }
 
@@ -368,7 +372,8 @@ export const styles = css`
   path.solar {
     stroke: var(--energy-solar-color);
   }
-  circle.solar {
+  circle.solar,
+  polygon.solar {
     stroke-width: 4;
     fill: var(--energy-solar-color);
   }
@@ -383,7 +388,8 @@ export const styles = css`
   circle.battery-home {
     stroke: var(--energy-battery-out-color);
   }
-  circle.battery-home {
+  circle.battery-home,
+  polygon.battery-home {
     stroke-width: 4;
     fill: var(--energy-battery-out-color);
   }
@@ -391,7 +397,8 @@ export const styles = css`
   circle.battery-solar {
     stroke: var(--energy-battery-in-color);
   }
-  circle.battery-solar {
+  circle.battery-solar,
+  polygon.battery-solar {
     stroke-width: 4;
     fill: var(--energy-battery-in-color);
   }
@@ -423,7 +430,9 @@ export const styles = css`
     stroke: var(--energy-grid-return-color);
   }
   circle.return,
-  circle.battery-to-grid {
+  circle.battery-to-grid,
+  polygon.return,
+  polygon.battery-to-grid {
     stroke-width: 4;
     fill: var(--energy-grid-return-color);
   }
@@ -448,7 +457,9 @@ export const styles = css`
     stroke: var(--energy-grid-consumption-color);
   }
   circle.grid,
-  circle.battery-from-grid {
+  circle.battery-from-grid,
+  polygon.grid,
+  polygon.battery-from-grid {
     stroke-width: 4;
     fill: var(--energy-grid-consumption-color);
   }

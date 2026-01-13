@@ -30,22 +30,39 @@ export const flowSolarToGrid = (config: PowerFlowCardPlusConfig, { battery, grid
                             const n = checkFlowDotsCount(config) ?? 1;
                             const start = i / n;
                             const end = (i + 1) / n;
-                            return svg`
-            <circle
-                r="1"
-                class="return"
-                vector-effect="non-scaling-stroke"
-              >
-                <animateMotion
-                  dur="${newDur.solarToGrid / n}s"
-                  keyTimes="0;1;1"
-                  keyPoints="${(i) / n} ; ${(i+1) / n}; ${(i) / n}"
-                  repeatCount="indefinite"
-                  calcMode="linear"
-                >
-                  <mpath xlink:href="#return" />
-                </animateMotion>
-              </circle>`
+                            return config.use_polygon
+                              ? svg`<polygon
+                                  points="${config.use_polygon}"
+                                  class="return"
+                                  vector-effect="non-scaling-stroke"
+                                >
+                                  <animateMotion
+                                    dur="${newDur.solarToGrid / n}s"
+                                    keyTimes="0;1;1"
+                                    keyPoints="${(i) / n} ; ${(i+1) / n}; ${(i) / n}"
+                                    repeatCount="indefinite"
+                                    calcMode="linear"
+                                    rotate="auto"
+                                  >
+                                    <mpath xlink:href="#return" />
+                                  </animateMotion>
+                                </polygon>`
+                              : svg`<circle
+                                  r="1"
+                                  class="return"
+                                  vector-effect="non-scaling-stroke"
+                                >
+                                  <animateMotion
+                                    dur="${newDur.solarToGrid / n}s"
+                                    keyTimes="0;1;1"
+                                    keyPoints="${(i) / n} ; ${(i+1) / n}; ${(i) / n}"
+                                    repeatCount="indefinite"
+                                    calcMode="linear"
+                                    rotate="auto"
+                                  >
+                                    <mpath xlink:href="#return" />
+                                  </animateMotion>
+                                </circle>`
               })}`
             : ""}
         </svg>

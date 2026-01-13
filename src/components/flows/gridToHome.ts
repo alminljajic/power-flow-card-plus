@@ -30,22 +30,39 @@ export const flowGridToHome = (config: PowerFlowCardPlusConfig, { battery, grid,
                             const n = checkFlowDotsCount(config) ?? 1;
                             const start = i / n;
                             const end = (i + 1) / n;
-                            return svg`
-            <circle
-          r="1"
-          class="grid"
-          vector-effect="non-scaling-stroke"
-        >
-          <animateMotion
-            dur="${newDur.gridToHome / n}s"
-            keyTimes="0;1;1"
-            keyPoints="${(i) / n} ; ${(i+1) / n}; ${(i) / n}"
-            repeatCount="indefinite"
-            calcMode="linear"
-          >
-            <mpath xlink:href="#grid" />
-          </animateMotion>
-        </circle>`;
+                            return config.use_polygon
+                              ? svg`<polygon
+                                  points="${config.use_polygon}"
+                                  class="grid"
+                                  vector-effect="non-scaling-stroke"
+                                >
+                                  <animateMotion
+                                    dur="${newDur.gridToHome / n}s"
+                                    keyTimes="0;1;1"
+                                    keyPoints="${(i) / n} ; ${(i+1) / n}; ${(i) / n}"
+                                    repeatCount="indefinite"
+                                    calcMode="linear"
+                                    rotate="auto"
+                                  >
+                                    <mpath xlink:href="#grid" />
+                                  </animateMotion>
+                                </polygon>`
+                              : svg`<circle
+                                  r="1"
+                                  class="grid"
+                                  vector-effect="non-scaling-stroke"
+                                >
+                                  <animateMotion
+                                    dur="${newDur.gridToHome / n}s"
+                                    keyTimes="0;1;1"
+                                    keyPoints="${(i) / n} ; ${(i+1) / n}; ${(i) / n}"
+                                    repeatCount="indefinite"
+                                    calcMode="linear"
+                                    rotate="auto"
+                                  >
+                                    <mpath xlink:href="#grid" />
+                                  </animateMotion>
+                                </circle>`;
               })}`
             : ""}
         </svg>
